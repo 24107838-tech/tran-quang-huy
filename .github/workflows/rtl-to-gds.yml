@@ -1,0 +1,49 @@
+name: RTL and LibreLane
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  run-flow:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install Icarus Verilog
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y iverilog
+
+      - name: Run RTL testbench
+        run: |
+          iverilog -g2012 -o sim h06_manchester.v tb_h06_manchester.v
+          vvp sim
+
+      - name: Install LibreLane
+        run: python -m pip install librelane==3.0.16
+
+      - name: Run RTL-to-GDS flow
+        run: python -m librelane --dockerized config.json
+
+      - name: Upload run results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: manchester-flow-results
+          path: |
+            runs/
+            h06_manchester.vcd
+          if-no-files-found: warn
+          retention-days: 14
