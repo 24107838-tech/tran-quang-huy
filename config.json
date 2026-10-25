@@ -1,10 +1,14 @@
 {
   "DESIGN_NAME": "h06_manchester",
-  "VERILOG_FILES": ["dir::h06_manchester.v"],
+  "VERILOG_FILES": [
+    "dir::h06_manchester.v"
+  ],
   "CLOCK_PORT": "clk",
-  "CLOCK_PERIOD": 10.0,
+  "CLOCK_PERIOD": 20,
   "PDK": "sky130A",
   "STD_CELL_LIBRARY": "sky130_fd_sc_hd",
+  "FP_SIZING": "absolute",
   "DIE_AREA": [0, 0, 100, 100],
-  "FP_CORE_UTIL": 35
+  "FP_CORE_UTIL": 35,
+  "RUN_KLAYOUT_XOR": false
 }
