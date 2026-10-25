@@ -35,7 +35,7 @@ jobs:
         run: python -m pip install librelane==3.0.16
 
       - name: Run RTL-to-GDS flow
-        run: python -m librelane --dockerized config.json
+        run: python -m librelane --docker-no-tty --dockerized config.json
 
       - name: Upload run results
         if: always()
